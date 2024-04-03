@@ -4,14 +4,14 @@ import { startStandaloneServer } from '@apollo/server/standalone';
 import {GraphQLObjectType} from "graphql/type"
 import {buildTypeDefsAndResolvers, Field, ID, ObjectType, Query, Resolver} from "type-graphql"
 import {buildSchema} from "graphql"
-import {Book} from "./types/book"
-import {BookResolver} from "./resolvers/book-resolver"
+import {Mower} from "./types/mower"
+import {MowerResolver} from "./resolvers/mower-resolver"
 
 
 
 
 const {typeDefs, resolvers} = await buildTypeDefsAndResolvers({
-	resolvers: [Book, BookResolver]
+	resolvers: [Mower, MowerResolver]
 })
 
 // The ApolloServer constructor requires two parameters: your schema
