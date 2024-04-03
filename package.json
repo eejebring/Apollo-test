@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "compile": "tsc",
-    "start": "npm run compile && node ./dist/index.js"
+    "start": "tsx ./src/index.ts",
+    "start-mongo": "docker run --name mongodb -d -p 27017:27017 mongodb/mongodb-community-server:latest",
+    "stop-mongo": "docker stop mongodb && docker rm mongodb"
   },
   "author": "eejebring",
   "license": "ISC",
@@ -13,7 +15,10 @@
   "dependencies": {
     "@apollo/server": "^4.10.2",
     "graphql": "^16.8.1",
+    "mongodb": "^6.5.0",
+    "mongoose": "^8.2.4",
     "reflect-metadata": "^0.2.2",
+    "tsx": "^4.7.1",
     "type-graphql": "^2.0.0-beta.1"
   },
   "devDependencies": {

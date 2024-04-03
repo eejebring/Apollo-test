@@ -1,16 +1,16 @@
 import {Query, Resolver} from "type-graphql"
-import {Mower} from "../types/mower"
+import {MowerDTO} from "../graphs/mower-dto"
+import {mowerRepo} from "../repositories/mower-repo"
 
-@Resolver(() => Mower)
+@Resolver(() => MowerDTO)
 export class MowerResolver {
-	@Query(() => Mower)
-	books():Mower {
-		const theBook :Mower =
-			{
-				id: "1",
-				name: "Grassy",
-				owner: "Emil Ejebring"
-			}
-		return theBook
+	@Query(() => [MowerDTO])
+	async mowers(): Promise<MowerDTO[]> {
+		const mowerDocument = await mowerRepo.find()
+		const mowers = mowerDocument.map((mower): MowerDTO => {
+			return {id: mower._id.toString(), name: mower.name, owner: mower.owner}
+		})
+		//console.log(mowers)
+		return mowers
 	}
 }

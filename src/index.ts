@@ -1,17 +1,19 @@
-import { ApolloServer } from '@apollo/server';
-import "reflect-metadata";
-import { startStandaloneServer } from '@apollo/server/standalone';
-import {GraphQLObjectType} from "graphql/type"
-import {buildTypeDefsAndResolvers, Field, ID, ObjectType, Query, Resolver} from "type-graphql"
-import {buildSchema} from "graphql"
-import {Mower} from "./types/mower"
+import {ApolloServer} from "@apollo/server"
+import {startStandaloneServer} from "@apollo/server/standalone"
+import {buildTypeDefsAndResolvers} from "type-graphql"
+import mongoose from "mongoose"
+import {MowerDTO} from "./graphs/mower-dto"
 import {MowerResolver} from "./resolvers/mower-resolver"
+import {mowerRepo} from "./repositories/mower-repo"
 
+const db_url = "mongodb://localhost:27017"
+await mongoose.connect(db_url)
 
-
+const x = new mowerRepo({name: "Grassy", owner: "Emil Ejebring"})
+await x.save()
 
 const {typeDefs, resolvers} = await buildTypeDefsAndResolvers({
-	resolvers: [Mower, MowerResolver]
+	resolvers: [MowerDTO, MowerResolver]
 })
 
 // The ApolloServer constructor requires two parameters: your schema
@@ -19,14 +21,14 @@ const {typeDefs, resolvers} = await buildTypeDefsAndResolvers({
 const server = new ApolloServer({
 	typeDefs,
 	resolvers,
-});
+})
 
 // Passing an ApolloServer instance to the `startStandaloneServer` function:
 //  1. creates an Express app
 //  2. installs your ApolloServer instance as middleware
 //  3. prepares your app to handle incoming requests
-const { url } = await startStandaloneServer(server, {
-	listen: { port: 4000 },
-});
+const sandbox_url = (await startStandaloneServer(server, {
+	listen: {port: 4000},
+})).url
 
-console.log(`🚀  Server ready at: ${url}`);
+console.log(`🚀  Sandbox ready at: ${sandbox_url}`)
