@@ -2,18 +2,20 @@ import {ApolloServer} from "@apollo/server"
 import {startStandaloneServer} from "@apollo/server/standalone"
 import {buildTypeDefsAndResolvers} from "type-graphql"
 import mongoose from "mongoose"
-import {MowerDTO} from "./graphs/mower-dto"
+import {MowerDto} from "./graphs/mower-dto"
 import {MowerResolver} from "./resolvers/mower-resolver"
 import {mowerRepo} from "./repositories/mower-repo"
 
 const db_url = "mongodb://localhost:27017"
 await mongoose.connect(db_url)
 
-const x = new mowerRepo({name: "Grassy", owner: "Emil Ejebring"})
-await x.save()
+// Create a new mower on startup to populate the database
+const newMower = new mowerRepo({name: "Grassy", owner: "Emil Ejebring"})
+await newMower.save()
+
 
 const {typeDefs, resolvers} = await buildTypeDefsAndResolvers({
-	resolvers: [MowerDTO, MowerResolver]
+	resolvers: [MowerDto, MowerResolver]
 })
 
 // The ApolloServer constructor requires two parameters: your schema

@@ -2,7 +2,7 @@ import {Field, ID, ObjectType} from "type-graphql"
 import "reflect-metadata"
 
 @ObjectType({description: "This object represents a real-world mower"})
-export class MowerDTO {
+export class MowerDto {
 	@Field(() => ID, {name: "id", description: "The id of the mower"})
 	id: string
 
