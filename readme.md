@@ -7,15 +7,19 @@ apollo-server -> typescript -> tincoDB
 ## How to run
 
 1. Install dependencies
-   ```bash npm install```
+   ```npm install```
 2. start the database
-   ```bash npm run start-mongo```
-2. Run the server
-   ```bash npm run start```
-3. Open the playground: http://localhost:4000/graphql
+   ```npm run start-mongo```
+3. Run the server
+   ```npm run start```
+4. Open the playground: http://localhost:4000/graphql
+
+afterward you can shutdown the database with
+```npm run stop-mongo```
 
 ## resouces
 
 - [Apollo Server](https://www.apollographql.com/docs/apollo-server/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [typegraphql](https://typegraphql.com/)
+- [mongoose](https://mongoosejs.com/)
